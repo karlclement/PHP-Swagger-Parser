@@ -66,7 +66,7 @@ abstract class AbstractObject implements ObjectInterface
         $value = $this->getDocumentProperty($name);
         
         if(is_array($value)) {
-            $newValue = [];
+            $newValue = array();
             
             foreach($value as $arrayValue) {
                 if($allowsRef && property_exists($arrayValue, '$ref')) {
@@ -89,7 +89,7 @@ abstract class AbstractObject implements ObjectInterface
     public function setDocumentObjectProperty($name, $object)
     {
         if(is_array($object)) {
-            $value = [];
+            $value = array();
             
             foreach($object as $arrayObject) {
                 $value[] = $object->getSwaggerObjectValue();

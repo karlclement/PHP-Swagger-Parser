@@ -6,12 +6,12 @@ use Swagger\Exception as SwaggerException;
 
 class Document extends SwaggerObject\AbstractObject
 {
-    protected $operationsById = [];
+    protected $operationsById = array();
 
     public function getOperationsById($reset = false)
     {
         if($reset) {
-            $this->operationsById = [];
+            $this->operationsById = array();
         }
         
         if(empty($this->operationsById)) {
@@ -19,24 +19,24 @@ class Document extends SwaggerObject\AbstractObject
             foreach($paths->getAllPaths() as $path) {
                 $pathItem = $paths->getPath($path);
                 
-                foreach([
-                    [$pathItem, 'getGet'],
-                    [$pathItem, 'getPut'],
-                    [$pathItem, 'getPost'],
-                    [$pathItem, 'getDelete'],
-                    [$pathItem, 'getOptions'],
-                    [$pathItem, 'getHead'],
-                    [$pathItem, 'getPatch'],
-                ] as $operationMethod) {
+                foreach(array(
+                    array($pathItem, 'getGet'),
+                    array($pathItem, 'getPut'),
+                    array($pathItem, 'getPost'),
+                    array($pathItem, 'getDelete'),
+                    array($pathItem, 'getOptions'),
+                    array($pathItem, 'getHead'),
+                    array($pathItem, 'getPatch'),
+                ) as $operationMethod) {
                     try {
                         $operation = $operationMethod();
                         
                         if($operation instanceof SwaggerObject\Operation) {
-                            $this->operationsById[$operation->getOperationId()] = [
+                            $this->operationsById[$operation->getOperationId()] = array(
                                 'path' => $pathItem,
                                 'method' => strtoupper(substr($operationMethod[1], 3)),
                                 'operation' => $operation,
-                            ];
+                            );
                         }
                     } catch(SwaggerException\MissingDocumentPropertyException $e) {
                         // That's okay. Not every method is implemented.
