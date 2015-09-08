@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-
+        "thefrozenfire/swagger": "^2.0"
     },
     "autoload": {
         "psr-0": {
